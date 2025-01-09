@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 import pandas as pd
 from flask_cors import CORS
+import os
 # Load the dataset
 data = pd.read_csv('./data/processed_file.csv')
 numerical = ['Area', 'Frontage', 'Access Road', 'Floors', 'Bedrooms', 'Bathrooms','Price']
@@ -214,4 +215,5 @@ def get_category_statistics_by_province(province, column_name):
         return f"Cột {column_name} không tồn tại trong dữ liệu."
 
 if __name__ == '__main__':
-    app.run(port=1234)
+    port = int(os.environ.get("PORT", 5000))  # Sử dụng cổng từ biến môi trường hoặc 5000 mặc định
+    app.run(host="0.0.0.0", port=port)
